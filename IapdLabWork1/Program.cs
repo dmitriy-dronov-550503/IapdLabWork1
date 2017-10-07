@@ -14,13 +14,16 @@ namespace IapdLabWork1
     {
         static void Main(string[] args)
         {
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PnPEntity");
-            foreach (ManagementObject queryObj in searcher.Get())
+            var PCIinfo = new PCIDevices();
+            var devices = PCIinfo.getDevices();
+            foreach (DeviceInformation device in devices)
             {
-                foreach (PropertyData property in queryObj.Properties)
-                {
-                    Console.WriteLine("{0}: {1}", property.Name, property.Value);
-                }
+                Console.WriteLine("Description: {0}", device.getDesription());
+                Console.WriteLine("VendorID: " + device.getParameters()["vendorId"]);
+                Console.WriteLine("DeviceID: " + device.getParameters()["deviceId"]);
+                Console.WriteLine("SubsystemID: " + device.getParameters()["subsystemId"]);
+                Console.WriteLine("ReviviosnID: " + device.getParameters()["revisionId"]);
+                Console.WriteLine("Other data: " + device.getParameters()["otherId"]);
                 Console.WriteLine();
             }
             Console.ReadLine();
